@@ -1,5 +1,7 @@
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext('2d');
+const lose = document.querySelector('.Checklose');
+lose.style.display = 'none';
 
 const body = 35
 
@@ -16,48 +18,66 @@ function Snake()
     this.body = body;
     this.XS = body * 1;
     this.YS = 0;
-    
+    this.totalP = 0;
+    this.tail = [];
 }
 
 function Point(){
-    this.x
-    this.y
-    this.PointLocation = function()
-    {
-    this.x = (Math.floor(Math.random() * rows - 1) + 1) * body;
-    this.y = (Math.floor(Math.random() * cols - 1) + 1) * body;
-    }
-    this.draw = function() {
-        ctx.fillStyle = "#00CC00";
-        ctx.fillRect(this.x , this.y, body, body);
-    }
+    this.a;
+    this.b;
+    this.body = body;
+}
+
+function PointLocation ()
+{
+this.a = (Math.floor(Math.random() * rows - 1) + 1) * body;
+this.b = (Math.floor(Math.random() * cols - 1) + 1) * body;
 }
 
 
-/*
 function drawPoint()
 {
-    
+   ctx.fillStyle = "#00CC00";
+   ctx.fillRect(this.a , this.b, body, body); 
 }
-*/
+
 
 function drawSnake()
     {
         ctx.fillStyle = "#000000";
+        ctx.strokeStyle = "#FFFFFF";
+   
+        for(let i = 0; i < this.tail.length; i++)
+        {  
+            const {x , y} = this.tail[i];
+            ctx.fillRect(x, y, body, body);
+            ctx.strokeRect(x, y , body , body);
+        }
         ctx.fillRect(this.x, this.y, body, body);
+        ctx.strokeRect(this.x, this.y, body, body);
     }
 
 function init(){
    Point();
    Snake();
-   drawSnake();
-// drawPoint();
+   PointLocation();
 }
 
 init();
 
 function Movement()
 {
+    for(let i = 0; i < this.tail.length - 1; i++)
+    {
+        this.tail[i] = this.tail[i+1];
+    }
+
+    if(this.totalP > 0)
+    {
+        this.tail[this.totalP - 1] = {x: this.x, y: this.y};
+    }
+    
+
     this.x += this.XS;
     this.y += this.YS;
 
@@ -78,6 +98,51 @@ function Movement()
         this.y = canvas.height;
     }
 }
+
+function eatPoint(Point)
+{
+    if(this.x === this.a && this.y === this.b )
+    {
+        this.totalP++;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function checkTouch()
+{
+    for(let i = 0; i < this.tail.length; i++)
+    {
+        if(this.x === this.tail[i].x && this.y === this.tail[i].y)
+        {
+            clearInterval(move);
+            lose.style.display = "block";
+        }
+    }
+}
+
+
+function start()
+{
+    move = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawPoint();
+        Movement();
+        drawSnake();
+            if(eatPoint(Point)) 
+            {
+                PointLocation();
+                //console.log("ATE")
+            }
+
+            checkTouch();
+    }, 130)
+}
+
+start();
 
 function changeDirect(direction){
     switch(direction)
@@ -100,18 +165,6 @@ function changeDirect(direction){
         break;
     }
 } 
-
-function start()
-{
-    setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        Movement();
-        drawSnake();
-    }, 200)
-}
-
-start();
-
 
 
 window.addEventListener('keydown', ((evet) => {
