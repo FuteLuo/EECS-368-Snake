@@ -4,4 +4,4 @@ EECS 368 Project
   
   -Due day for this project is Nov.5
   
-  - I watch the tutorial from this youtube link: https://www.youtube.com/watch?v=Y-v25Aofoq4
+  -I watch the tutorial from this youtube link: https://www.youtube.com/watch?v=Y-v25Aofoq4
