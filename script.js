@@ -11,7 +11,7 @@ const cols = canvas.width / body;
 let snake = new Snake();
 let point = new Point();
 
-function Snake()
+function Snake() // original first snake represent
 {
     this.x = 0;
     this.y = 0;
@@ -22,27 +22,28 @@ function Snake()
     this.tail = [];
 }
 
-function Point(){
+function Point() // original first fruit represent
+{
     this.a;
     this.b;
     this.body = body;
 }
 
-function PointLocation ()
+function PointLocation () // random location on fruit
 {
 this.a = (Math.floor(Math.random() * rows - 1) + 1) * body;
 this.b = (Math.floor(Math.random() * cols - 1) + 1) * body;
 }
 
 
-function drawPoint()
+function drawPoint() // display the fruit
 {
    ctx.fillStyle = "#00CC00";
    ctx.fillRect(this.a , this.b, body, body); 
 }
 
 
-function drawSnake()
+function drawSnake() // display the snake
     {
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#FFFFFF";
@@ -57,7 +58,8 @@ function drawSnake()
         ctx.strokeRect(this.x, this.y, body, body);
     }
 
-function init(){
+function init() // set initial
+{ 
    Point();
    Snake();
    PointLocation();
@@ -65,7 +67,9 @@ function init(){
 
 init();
 
-function Movement()
+function Movement() 
+// when snake out of boundry, go back to orthognal another side. 
+// when getting points, add one tails.
 {
     for(let i = 0; i < this.tail.length - 1; i++)
     {
@@ -99,7 +103,7 @@ function Movement()
     }
 }
 
-function eatPoint(Point)
+function eatPoint(Point) // adding tails when getting fruit
 {
     if(this.x === this.a && this.y === this.b )
     {
@@ -112,7 +116,7 @@ function eatPoint(Point)
     }
 }
 
-function checkTouch()
+function checkTouch() // checking collision 
 {
     for(let i = 0; i < this.tail.length; i++)
     {
@@ -125,7 +129,7 @@ function checkTouch()
 }
 
 
-function start()
+function start() // Start game movement
 {
     move = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -144,7 +148,8 @@ function start()
 
 start();
 
-function changeDirect(direction){
+function changeDirect(direction) // snake direction movement
+{
     switch(direction)
     {
         case 'Up': 
@@ -173,4 +178,3 @@ window.addEventListener('keydown', ((evet) => {
     changeDirect(direction);
 }))
 
-//requestAnimationFrame(start);
