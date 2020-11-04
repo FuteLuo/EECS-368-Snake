@@ -7,3 +7,5 @@ EECS 368 Project
   -I watch the tutorial from this youtube link: https://www.youtube.com/watch?v=21eSpMtJwrc
   
   -I was using JS and HTML to implement the code.
+ 
+  -Online Demo : https://futeluo.github.io/EECS-368-Snake/
